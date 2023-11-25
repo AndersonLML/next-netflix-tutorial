@@ -1,6 +1,7 @@
 import NextAuth, { AuthOptions } from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
+import FacebookProvider from 'next-auth/providers/facebook';
 import Credentials from 'next-auth/providers/credentials';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { compare } from 'bcrypt';
@@ -8,6 +9,10 @@ import prismadb from '@/libs/prismadb';
 
 export const authOptions: AuthOptions = {
   providers: [
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_CLIENT_ID || '',
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET || '',
+    }),
     GithubProvider({
       clientId: process.env.GITHUB_ID || '',
       clientSecret: process.env.GITHUB_SECRET || '',
@@ -55,7 +60,7 @@ export const authOptions: AuthOptions = {
   pages: {
     signIn: '/auth'
   },
-  debug: process.env.NODE_ENV === 'development',
+  debug: process.env.NODE_ENV === 'production',
   adapter: PrismaAdapter(prismadb),
   session: { strategy: 'jwt' },
   jwt: {

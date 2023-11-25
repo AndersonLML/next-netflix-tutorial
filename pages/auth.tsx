@@ -4,7 +4,7 @@ import { NextPageContext } from 'next';
 import { getSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { FcGoogle } from 'react-icons/fc';
-import { FaGithub } from 'react-icons/fa';
+import { FaFacebook, FaGithub } from 'react-icons/fa';
 
 import Input from '@/components/Input';
 
@@ -76,7 +76,7 @@ const Auth = () => {
         <div className="flex justify-center">
           <div className="bg-black bg-opacity-70 px-16 py-16 self-center mt-2 lg:w-2/5 lg:max-w-md rounded-md w-full">
             <h2 className="text-white text-4xl mb-8 font-semibold">
-              {variant === 'login' ? 'Sign in' : 'Register'}
+              {variant === 'login' ? 'Sign in' : 'Registrar'}
             </h2>
             <div className="flex flex-col gap-4">
               {variant === 'register' && (
@@ -107,6 +107,9 @@ const Auth = () => {
               {variant === 'login' ? 'Login' : 'Sign up'}
             </button>
             <div className="flex flex-row items-center gap-4 mt-8 justify-center">
+            <div onClick={() => signIn('facebook', { callbackUrl: '/profiles' })} className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer transition">
+                <FaFacebook size={32} />
+              </div>
               <div onClick={() => signIn('google', { callbackUrl: '/profiles' })} className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition">
                 <FcGoogle size={32} />
               </div>
@@ -115,9 +118,9 @@ const Auth = () => {
               </div>
             </div>
             <p className="text-neutral-500 mt-12">
-              {variant === 'login' ? 'First time using Netflix?' : 'Already have an account?'}
+              {variant === 'login' ? 'Primeira vez utilizando Streamx?' : 'Já tem uma conta?'}
               <span onClick={toggleVariant} className="text-white ml-1 hover:underline cursor-pointer">
-                {variant === 'login' ? 'Create an account' : 'Login'}
+                {variant === 'login' ? 'Criar uma conta' : 'Login'}
               </span>
               .
             </p>
